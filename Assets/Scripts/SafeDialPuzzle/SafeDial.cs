@@ -7,9 +7,10 @@ public class SafeDial : MonoBehaviour {
     [SerializeField] private Dial dial;
     [SerializeField] private Transform indicator;
     [SerializeField] private List<Transform> markers = new List<Transform>();
+    [SerializeField] private Animator lidAnimator;
     
-    [SerializeField] private List<int> unlockSequence = new List<int> { 3, 2, 1, 0, 5, 6, 7, 8, 9, 4 };
-    [SerializeField] private List<string> directions = new List<string> { "L", "L", "L", "L", "R", "R", "R", "R", "L", "L" };
+    [SerializeField] private List<int> unlockSequence = new List<int> { 9, 8, 7, 0, 1, 6, 5, 2, 3, 4 };
+    [SerializeField] private List<string> directions = new List<string> { "R", "R", "R", "L", "L", "R", "R", "L", "L", "L" };
     
     private int currentStep = 0;
     private float lastAngle = 0f;
@@ -31,8 +32,6 @@ public class SafeDial : MonoBehaviour {
     private void Update() {
 
         if (dial.isLocked) return;
-        
-        Debug.Log(markerRenderers.Count);
 
         float currentAngle = dial.CurrentAngle;
         float delta = Mathf.DeltaAngle(lastAngle, currentAngle);
@@ -71,7 +70,6 @@ public class SafeDial : MonoBehaviour {
                 closestMarkerIndex = i;
             }
         }
-        Debug.Log(closestMarkerIndex);
         return closestMarkerIndex;
     }
     
@@ -85,6 +83,11 @@ public class SafeDial : MonoBehaviour {
     }
 
     void OnPuzzleComplete() {
+        if (lidAnimator != null) {
+            lidAnimator.SetTrigger("Open");
+            lidAnimator.SetBool("IsOpened", true);
+        }
+        
         Debug.Log("Unlocked");
         InputManager.Instance.EnableCamera();
     }

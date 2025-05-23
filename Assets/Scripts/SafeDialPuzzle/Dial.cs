@@ -44,7 +44,7 @@ public class Dial : MonoBehaviour {
             currentAngle += angle;
             currentAngle %= 360;
             
-            transform.localEulerAngles = new Vector3(0, -currentAngle, 0);
+            transform.localEulerAngles = new Vector3(0, -currentAngle, -90);
             
             lastMousePos = Input.mousePosition;
         }
@@ -57,7 +57,7 @@ public class Dial : MonoBehaviour {
     public void Reset() {
         isLocked = false;
         currentAngle = 0f;
-        transform.localEulerAngles = Vector3.zero;
+        transform.localEulerAngles = new Vector3(0, 0, -90);
     }
 
 }
